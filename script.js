@@ -332,3 +332,63 @@ async function downloadImage(imageUrl, title) {
     }
   }
 }
+
+function deleteFavorite(index) {
+  favorites.splice(index, 1);
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  updateFavoritesDisplay();
+}
+
+function showLoading(element) {
+  element.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+}
+
+function showError(element, message) {
+  element.innerHTML = `<div class="error">Error: ${message}</div>`;
+}
+
+// Add these new functions for favorites management
+function isLiked(imageUrl) {
+  return favorites.some(
+    (item) => item.url === imageUrl || item.img_src === imageUrl
+  );
+}
+
+function toggleFavorite(imageUrl, type, data) {
+  const index = favorites.findIndex(
+    (item) => item.url === imageUrl || item.img_src === imageUrl
+  );
+
+  if (index === -1) {
+    favorites.push(data);
+  } else {
+    favorites.splice(index, 1);
+  }
+
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  updateFavoritesDisplay();
+
+  // Update like button appearance
+  const likeBtn = event.target;
+  likeBtn.classList.toggle("liked");
+  likeBtn.textContent = isLiked(imageUrl) ? "💚 " : "🤍";
+}
+
+// Add the setupHamburgerMenu function
+function setupHamburgerMenu() {
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("nav-links");
+
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navLinks.classList.toggle("show");
+  });
+
+  // Close menu when a link is clicked
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    link.addEventListener("click", () => {
+      hamburger.classList.remove("active");
+      navLinks.classList.remove("show");
+    });
+  });
+}
