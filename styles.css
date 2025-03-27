@@ -45,7 +45,7 @@ body::before {
   font-size: 1.8rem;
   font-weight: bold;
   letter-spacing: 2px;
-  margin-right: auto; /* Pushes nav links to the right */
+  margin-right: auto;
   color: tomato;
 }
 
@@ -55,7 +55,7 @@ body::before {
   list-style: none;
   margin: 0;
   padding: 0;
-  margin-left: auto; /* Ensures links stay to the right */
+  margin-left: auto;
   align-items: first baseline;
 }
 
@@ -453,7 +453,7 @@ body::before {
 
 @media screen and (max-width: 768px) {
   .hamburger {
-    display: block; /* Show only on mobile */
+    display: block;
   }
 
   .nav-links {

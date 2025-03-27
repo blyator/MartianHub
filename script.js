@@ -334,9 +334,19 @@ async function downloadImage(imageUrl, title) {
 }
 
 function deleteFavorite(index) {
+  const imageUrl = favorites[index].url || favorites[index].img_src;
+
   favorites.splice(index, 1);
   localStorage.setItem("favorites", JSON.stringify(favorites));
+
   updateFavoritesDisplay();
+  const originalLikeBtn = document.querySelector(
+    `button[onclick*="${imageUrl}"].like-btn`
+  );
+  if (originalLikeBtn) {
+    originalLikeBtn.classList.remove("liked");
+    originalLikeBtn.textContent = "🤍";
+  }
 }
 
 function showLoading(element) {
@@ -346,8 +356,6 @@ function showLoading(element) {
 function showError(element, message) {
   element.innerHTML = `<div class="error">Error: ${message}</div>`;
 }
-
-// Add these new functions for favorites management
 function isLiked(imageUrl) {
   return favorites.some(
     (item) => item.url === imageUrl || item.img_src === imageUrl
@@ -368,13 +376,11 @@ function toggleFavorite(imageUrl, type, data) {
   localStorage.setItem("favorites", JSON.stringify(favorites));
   updateFavoritesDisplay();
 
-  // Update like button appearance
   const likeBtn = event.target;
   likeBtn.classList.toggle("liked");
   likeBtn.textContent = isLiked(imageUrl) ? "💚 " : "🤍";
 }
 
-// Add the setupHamburgerMenu function
 function setupHamburgerMenu() {
   const hamburger = document.getElementById("hamburger");
   const navLinks = document.getElementById("nav-links");
@@ -384,7 +390,6 @@ function setupHamburgerMenu() {
     navLinks.classList.toggle("show");
   });
 
-  // Close menu when a link is clicked
   document.querySelectorAll(".nav-link").forEach((link) => {
     link.addEventListener("click", () => {
       hamburger.classList.remove("active");
