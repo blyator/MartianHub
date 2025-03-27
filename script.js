@@ -45,7 +45,6 @@ function setupTabSwitching() {
     });
   });
 
-  // Handle tab button clicks
   tabButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const tabId = button.dataset.tab;
@@ -237,99 +236,19 @@ async function downloadImage(imageUrl, title) {
   const button = event.currentTarget;
   const originalContent = button.innerHTML;
 
-  try {
-    button.innerHTML = `
-      <svg class="svgIcon" viewBox="0 0 384 512">
-        <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
-      </svg>
-      <div class="icon2"></div>
-      <span class="tooltip"></span>
-    `;
-    button.disabled = true;
-
-    const proxyUrl = "https://thingproxy.freeboard.io/fetch/";
-    console.log("Attempting download with ThingProxy:", proxyUrl + imageUrl);
-
-    const response = await fetch(proxyUrl + imageUrl);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.style.display = "none";
-    a.href = url;
-    a.download = title
-      ? `${title
-          .toLowerCase()
-          .replace(/[^a-z0-9]/g, "-")
-          .slice(0, 30)}.jpg`
-      : "mars-image.jpg";
-
-    document.body.appendChild(a);
-    a.click();
-
-    setTimeout(() => {
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-      button.innerHTML = originalContent;
-      button.disabled = false;
-    }, 1000);
-  } catch (error) {
-    console.error("ThingProxy download failed:", error);
-
-    try {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.src = imageUrl;
-
-      await new Promise((resolve, reject) => {
-        img.onload = resolve;
-        img.onerror = () => reject(new Error("Image loading failed"));
-      });
-
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-
-      canvas.toBlob(
-        (blob) => {
-          if (!blob) {
-            throw new Error("Blob creation failed");
-          }
-
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.style.display = "none";
-          a.href = url;
-          a.download = title
-            ? `${title
-                .toLowerCase()
-                .replace(/[^a-z0-9]/g, "-")
-                .slice(0, 30)}.jpg`
-            : "mars-image.jpg";
-
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-
-          button.innerHTML = originalContent;
-          button.disabled = false;
-        },
-        "image/jpeg",
-        0.95
-      );
-    } catch (finalError) {
-      console.error("All download attempts failed:", finalError);
-      button.innerHTML = originalContent;
-      button.disabled = false;
-      alert(
-        "Download failed. Please try again or right-click to save the image."
-      );
-    }
-  }
+  button.innerHTML = `
+    <svg class="svgIcon" viewBox="0 0 384 512">
+      <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
+    </svg>
+    <div class="icon2"></div>
+    <span class="tooltip">Opening...</span>
+  `;
+  button.disabled = true;
+  window.open(imageUrl, "_blank");
+  setTimeout(() => {
+    button.innerHTML = originalContent;
+    button.disabled = false;
+  }, 1000);
 }
 
 function deleteFavorite(index) {
