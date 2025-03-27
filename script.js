@@ -81,7 +81,7 @@ async function fetchAPOD() {
             data.url
           }', 'apod', ${JSON.stringify(data).replace(/"/g, "&quot;")})" 
             class="like-btn ${isLiked(data.url) ? "liked" : ""}">
-            ${isLiked(data.url) ? "🧡 " : "🤍"}
+            ${isLiked(data.url) ? "❤️ " : "🤍"}
           </button>
         </div>
         <div class="apod-media">
@@ -141,7 +141,7 @@ async function fetchMarsImages() {
                   photo.img_src
                 }', 'mars', ${JSON.stringify(photo).replace(/"/g, "&quot;")})" 
                   class="like-btn ${isLiked(photo.img_src) ? "liked" : ""}">
-                  ${isLiked(photo.img_src) ? "🧡 " : "🤍"}
+                  ${isLiked(photo.img_src) ? "❤️ " : "🤍"}
                 </button>
               </div>
               <p>Rover: ${photo.rover.name}</p>
@@ -188,7 +188,7 @@ function updateFavoritesDisplay() {
   if (favorites.length === 0) {
     favoritesContent.innerHTML = `
       <div class="empty-state">
-        <p>Like some pictures to see them here 🧡 🌅</p>
+        <p>Like some pictures to see them here ❤️ 🌅</p>
       </div>`;
     return;
   }
@@ -296,7 +296,7 @@ function toggleFavorite(imageUrl, type, data) {
 
   const likeBtn = event.target;
   likeBtn.classList.toggle("liked");
-  likeBtn.textContent = isLiked(imageUrl) ? "🧡 " : "🤍";
+  likeBtn.textContent = isLiked(imageUrl) ? "❤️ " : "🤍";
 }
 
 function setupHamburgerMenu() {

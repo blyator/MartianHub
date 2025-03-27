@@ -329,6 +329,7 @@ body::before {
   cursor: pointer;
   transition: transform 0.2s ease;
   padding: 8px;
+  color: #e15555;
 }
 .like-btn:hover {
   transform: scale(1.2);
