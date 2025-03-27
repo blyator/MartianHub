@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MartianHub</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <ul class="nav-links">
+          <li><a href="#" class="nav-link active" data-tab="apod">APOD</a></li>
+          <li><a href="#" class="nav-link" data-tab="mars">Mars Rovers</a></li>
+          <li>
+            <a href="#" class="nav-link" data-tab="favorites">Favorites</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="apod">APOD</button>
+      <button class="tab-btn" data-tab="mars">Mars Rovers</button>
+      <button class="tab-btn" data-tab="favorites">Favorites</button>
+    </div>
+    <div class="tab-content">
+      <div id="apod-tab" class="tab-pane active">
+        <div class="apod-wrapper">
+          <div id="apod-content">
+            <div class="loading">
+              <div class="spinner"></div>
+              <p>Astronomy Picture of the Day...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="mars-tab" class="tab-pane">
+        <div class="filters">
+          <select id="rover-select">
+            <option value="curiosity">Curiosity</option>
+            <option value="opportunity">Opportunity</option>
+            <option value="spirit">Spirit</option>
+            <option value="perseverance">Perseverance</option>
+          </select>
+          <button id="mars-search-btn">Search</button>
+        </div>
+        <div id="mars-content">
+          <div class="empty-state">
+            <p>Select a rover to view 🔭📸🌄🔥</p>
+          </div>
+        </div>
+      </div>
+      <div id="favorites-tab" class="tab-pane">
+        <div class="favorites-content">
+          <div class="empty-state">
+            <p>Like some images to see them here!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
