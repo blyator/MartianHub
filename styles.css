@@ -87,7 +87,7 @@ body::before {
 }
 
 .hamburger {
-  display: block;
+  display: none;
   background: none;
   border: none;
   cursor: pointer;
@@ -450,7 +450,12 @@ body::before {
   gap: 8px;
   align-items: center;
 }
+
 @media screen and (max-width: 768px) {
+  .hamburger {
+    display: block; /* Show only on mobile */
+  }
+
   .nav-links {
     display: none;
     width: 25%;
@@ -464,10 +469,13 @@ body::before {
     border-radius: 0 0 12px 12px;
     transition: 0.3s;
   }
-  @media screen and (min-width: 769px) {
-    .hamburger {
-      display: none;
-    }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
   }
 }
 @keyframes slide-in-top {
