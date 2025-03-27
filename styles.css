@@ -60,23 +60,24 @@ body::before {
 }
 
 .nav-link {
-  color: white;
+  color: rgb(216, 165, 129);
   text-decoration: none;
   padding: 8px 16px;
   border-radius: 4px;
   transition: all 0.3s ease;
   font-weight: 700;
   font-size: large;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .nav-link:hover {
-  background-color: #a98467;
+  background-color: #723929;
   transform: translateY(-2px);
 }
 
 .nav-link.active {
   text-decoration: underline;
-  color: #251705c7;
+  color: #195048c7;
 }
 .nav-links.show {
   display: flex;
@@ -120,7 +121,7 @@ body::before {
   padding: 10px;
   border: none;
   background-color: #ca7d5f4a;
-  color: white;
+  color: rgb(87, 64, 64);
   font-size: 15px;
   font-weight: bold;
   cursor: pointer;
