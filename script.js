@@ -1,4 +1,3 @@
-// API Configuration
 const myKey = "t3SZ3enb1lEYV5PlxcJgyj5KgO4cqVb0P5hnoVol";
 const URL = {
   APOD: `https://api.nasa.gov/planetary/apod?api_key=${myKey}`,

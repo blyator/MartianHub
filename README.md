@@ -1,12 +1,12 @@
-# 🚀 MartianHub 🌕
+# MartianHub 🌕
 
 Explore real images from Mars and Earth, captured by NASA's rovers and satellites.
 
-## 📌 Overview
+## Overview
 
 MartianHub is a web app that fetches and displays images taken by NASA's Mars rovers. It provides a simple way to explore the Red Planet through high-quality photos from Curiosity and Perseverance Rovers.
 
-## 🎯 How It Works
+## How It Works
 
 - Visit MartianHub in your web browser
 - Browse through NASA's Astronomy Picture of the Day (APOD)
@@ -14,14 +14,13 @@ MartianHub is a web app that fetches and displays images taken by NASA's Mars ro
 - Save your favorite images
 - Download high-resolution images directly
 
-## ✨ Current Features
+## Current Features
 
-- ✅ View real-time Mars images from NASA rovers
-- ✅ Filter images by rover
-- ✅ Save favorites to local storage
-- ✅ Download images in high quality
-- ✅ Responsive design for all devices
-- ✅ Daily astronomy picture from NASA
+- View Mars images from NASA rovers
+- Filter images by rover
+- Download images in high quality
+- Responsive design for all devices
+- Daily astronomy picture from NASA
 
 ## 🔮 Upcoming Features
 
@@ -82,4 +81,4 @@ MartianHub is a web app that fetches and displays images taken by NASA's Mars ro
 
 ---
 
-Made with ❤️
+Made with ❤️ by billy
