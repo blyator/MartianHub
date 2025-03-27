@@ -6,44 +6,37 @@ const URL = {
     `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=1000&api_key=${myKey}`,
 };
 
-// Add this at the top with other global variables
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-// Initialize app when DOM is loaded
 document.addEventListener("DOMContentLoaded", initApp);
 
 function initApp() {
   setupTabSwitching();
   setupMarsSearch();
-  fetchAPOD(); // Changed from setupAPOD to directly fetch today's APOD
+  fetchAPOD();
   loadFavorites();
-  setupHamburgerMenu(); // Add this line
+  setupHamburgerMenu();
 }
 
-// Tab Switching Logic
 function setupTabSwitching() {
   const navLinks = document.querySelectorAll(".nav-link");
   const tabButtons = document.querySelectorAll(".tab-btn");
   const tabPanes = document.querySelectorAll(".tab-pane");
 
   function switchTab(tabId) {
-    // Update navigation links
     navLinks.forEach((link) => {
       link.classList.toggle("active", link.dataset.tab === tabId);
     });
 
-    // Update tab buttons
     tabButtons.forEach((btn) => {
       btn.classList.toggle("active", btn.dataset.tab === tabId);
     });
 
-    // Update tab panes
     tabPanes.forEach((pane) => {
       pane.classList.toggle("active", pane.id === `${tabId}-tab`);
     });
   }
 
-  // Handle nav link clicks
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
@@ -62,14 +55,12 @@ function setupTabSwitching() {
     });
   });
 
-  // Handle initial load and direct URL access
   const hash = window.location.hash.slice(1);
   if (hash) {
     switchTab(hash);
   }
 }
 
-// Simplified APOD function - only fetches today's image
 async function fetchAPOD() {
   const apodContent = document.getElementById("apod-content");
   showLoading(apodContent);
@@ -256,6 +247,10 @@ async function downloadImage(imageUrl, title) {
       <span class="tooltip"></span>
     `;
     button.disabled = true;
+
+    const proxyUrl = "https://thingproxy.freeboard.io/fetch/";
+    console.log("Attempting download with ThingProxy:", proxyUrl + imageUrl);
+
     const response = await fetch(proxyUrl + imageUrl);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
