@@ -22,14 +22,14 @@ MartianHub is a web app that fetches and displays images taken by NASA's Mars ro
 - Responsive design for all devices
 - Daily astronomy picture from NASA
 
-## 🔮 Upcoming Features
+## Upcoming Features
 
-- 📅 Advanced date-based filtering
-- 📸 Filter by rover cameras
-- 🌍 Earth observation images from NASA satellites
-- 🎨 Custom theme options
+- Advanced date-based filtering
+- Filter by rover cameras
+- Earth observation images from NASA satellites
+- Custom theme options
 
-## 🚀 Features
+## Features
 
 - **Astronomy Picture of the Day (APOD)**
 
@@ -41,8 +41,8 @@ MartianHub is a web app that fetches and displays images taken by NASA's Mars ro
   - Browse photos from various Mars rovers:
     - Curiosity
     - Perseverance
-  - Filter and search capabilities
-  - High-resolution image viewing
+  - Filter and search
+  - High-resolution image
 
 - **Favorites**
 
@@ -50,18 +50,14 @@ MartianHub is a web app that fetches and displays images taken by NASA's Mars ro
   - Download images for offline viewing
   - Quick delete functionality
 
-- **Responsive Design**
-  - Mobile-friendly interface
-  - Optimized for all devices
-
-## 🛠️ Technologies Used
+## Technologies Used
 
 - HTML5
 - CSS3
 - JavaScript
 - NASA API
 
-## 🌟 Usage
+## Usage
 
 1. **APOD Tab**
 
@@ -70,8 +66,7 @@ MartianHub is a web app that fetches and displays images taken by NASA's Mars ro
    - Save to favorites
 
 2. **Mars Rovers Tab**
-   - Select a rover from the dropdown
-   - Click "Search" to view latest photos
+   - Select a rover from the dropdown and click search
    - Save interesting images to favorites or you can download
 
 ## 🙏 Acknowledgments
