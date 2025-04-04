@@ -10,11 +10,14 @@ body {
   padding: 20px;
   height: 100vh;
   padding-top: 40px;
-  background: url(assets/nicolas.jpg) no-repeat;
+  background-color: #451807;
+  background-image: url(assets/nicolas.jpg);
+  background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   color: #f0f2f5;
+  will-change: background-image;
 }
 body::before {
   content: "";
@@ -26,6 +29,7 @@ body::before {
   background: inherit;
   filter: blur(2px);
   z-index: -1;
+  will-change: transform;
 }
 
 .navbar {
