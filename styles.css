@@ -10,7 +10,7 @@ body {
   padding: 20px;
   height: 100vh;
   padding-top: 40px;
-  background-color: #451807;
+  background-color: #090808;
   background-image: url(assets/nicolas.jpg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -52,6 +52,7 @@ body::before {
   letter-spacing: 2px;
   margin-right: auto;
   color: #451807;
+  cursor: pointer;
 }
 
 .nav-links {
@@ -374,6 +375,11 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  outline: none;
 }
 .like-btn:hover {
   transform: scale(1.2);
@@ -487,6 +493,10 @@ body::before {
   }
   .nav-links li {
     margin: 10px 0;
+  }
+  .like-btn {
+    padding: 12px;
+    font-size: 28px;
   }
 }
 @keyframes slide-in-top {
