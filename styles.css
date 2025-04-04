@@ -53,6 +53,7 @@ body::before {
   letter-spacing: 2px;
   margin-right: auto;
   color: #451807;
+  cursor: pointer;
 }
 
 .nav-links {
