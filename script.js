@@ -192,18 +192,19 @@ function displayAPOD(data) {
   `;
 }
 
-function expandImage(src) {
+function expandImage(imgSrc) {
   const modal = document.getElementById("imageModal");
   const modalImg = document.getElementById("expandedImage");
+  if (!modal || !modalImg) return;
 
-  if (modal && modalImg) {
-    modal.style.display = "block";
-    modalImg.src = src;
-    document.body.style.overflow = "hidden";
+  modalImg.src = imgSrc;
+  modal.classList.add("show");
+}
 
-    modalImg.style.animation = "none";
-    modalImg.offsetHeight;
-    modalImg.style.animation = "growIn 0.7s ease-out";
+function closeModal() {
+  const modal = document.getElementById("imageModal");
+  if (modal) {
+    modal.classList.remove("show");
   }
 }
 
@@ -211,26 +212,23 @@ function setupModal() {
   const modal = document.getElementById("imageModal");
   const closeBtn = document.querySelector(".close");
 
-  if (modal && closeBtn) {
-    closeBtn.addEventListener("click", () => {
-      modal.style.display = "none";
-      document.body.style.overflow = "auto";
-    });
-
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && modal.style.display === "block") {
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-      }
-    });
+  if (closeBtn) {
+    closeBtn.onclick = closeModal;
   }
+
+  if (modal) {
+    modal.onclick = function (event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+  }
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+  });
 }
 
 function generateMars(photos) {
