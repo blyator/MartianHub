@@ -7,31 +7,25 @@ const URL = {
 
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-document.addEventListener("DOMContentLoaded", () => {
-  tabSwitching();
-  document
-    .getElementById("mars-search-btn")
-    .addEventListener("click", fetchMarsImages);
-  fetchAPOD();
-  favouritePics();
-  hamburgerMenu();
-});
-
-function tabSwitching() {
+function switchTab(tabId) {
   const navLinks = document.querySelectorAll(".nav-link");
   const tabButtons = document.querySelectorAll(".tab-btn");
   const tabPanes = document.querySelectorAll(".tab-pane");
 
-  function switchTab(tabId) {
-    [navLinks, tabButtons].forEach((elements) =>
-      elements.forEach((el) =>
-        el.classList.toggle("active", el.dataset.tab === tabId)
-      )
-    );
-    tabPanes.forEach((pane) =>
-      pane.classList.toggle("active", pane.id === `${tabId}-tab`)
-    );
-  }
+  [navLinks, tabButtons].forEach((elements) =>
+    elements.forEach((el) =>
+      el.classList.toggle("active", el.dataset.tab === tabId)
+    )
+  );
+  tabPanes.forEach((pane) =>
+    pane.classList.toggle("active", pane.id === `${tabId}-tab`)
+  );
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const navLinks = document.querySelectorAll(".nav-link");
+  const tabButtons = document.querySelectorAll(".tab-btn");
+  const tabPanes = document.querySelectorAll(".tab-pane");
 
   [...navLinks, ...tabButtons].forEach((element) => {
     element.addEventListener("click", (e) => {
@@ -42,15 +36,27 @@ function tabSwitching() {
     });
   });
 
+  document
+    .getElementById("mars-search-btn")
+    .addEventListener("click", fetchMarsImages);
+  document.querySelector(".nav-brand").addEventListener("click", () => {
+    switchTab("apod");
+    history.pushState(null, "", "#apod");
+  });
+  fetchAPOD();
+  favouritePics();
+  hamburgerMenu();
+  setupModal();
+
   switchTab(window.location.hash.slice(1) || "apod");
-}
+});
 
 async function fetchAPOD() {
   const apodContent = document.getElementById("apod-content");
   showLoading(apodContent);
   try {
     const data = await (await fetch(URL.APOD)).json();
-    apodContent.innerHTML = generateAPOD(data);
+    displayAPOD(data);
   } catch (error) {
     showError(apodContent, error.message);
   }
@@ -113,7 +119,6 @@ function downloadPic(imageUrl, title) {
       <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
     </svg>
     <div class="icon2"></div>
-    <span class="tooltip">Opening...</span>
   `;
   button.disabled = true;
   window.open(imageUrl, "_blank");
@@ -149,26 +154,83 @@ function showError(element, message) {
 const isLiked = (imageUrl) =>
   favorites.some((item) => item.url === imageUrl || item.img_src === imageUrl);
 
-function generateAPOD(data) {
-  const mediaContent =
-    data.media_type === "image"
-      ? `<img src="${data.url}" alt="${data.title}">`
-      : `<iframe src="${data.url}" frameborder="0" allowfullscreen></iframe>`;
+function displayAPOD(data) {
+  const apodContent = document.getElementById("apod-content");
+  const isVideo = data.media_type === "video";
 
-  return `
+  apodContent.innerHTML = `
     <div class="apod-container">
+      <div class="apod-media">
+        ${
+          isVideo
+            ? `<iframe src="${data.url}" frameborder="0" allowfullscreen></iframe>`
+            : `<img src="${data.url}" alt="${data.title}" onclick="expandImage(this.src)" style="cursor: pointer;">`
+        }
+      </div>
       <div class="apod-content">
         <h2>${data.title}</h2>
         <p>${data.explanation}</p>
-        <button onclick="toggleFavorite('${data.url}', 'apod', ${JSON.stringify(
-    data
-  ).replace(/"/g, "&quot;")})" 
-          class="like-btn ${isLiked(data.url) ? "liked" : ""}">
-          ${isLiked(data.url) ? "❤️ " : "🤍"}
-        </button>
+        <div class="action-buttons">
+          <button onclick="downloadPic('${data.url}', 'apod-${
+    data.date
+  }')" class="Btn">
+            <svg class="svgIcon" viewBox="0 0 384 512">
+              <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
+            </svg>
+            <div class="icon2"></div>
+            <span class="tooltip"></span>
+          </button>
+          <button onclick="toggleFavorite('${
+            data.url
+          }', 'apod', ${JSON.stringify(data).replace(/"/g, "&quot;")})" 
+            class="like-btn ${isLiked(data.url) ? "liked" : ""}">
+            ${isLiked(data.url) ? "❤️ " : "🤍"}
+          </button>
+        </div>
       </div>
-      <div class="apod-media">${mediaContent}</div>
-    </div>`;
+    </div>
+  `;
+}
+
+function expandImage(src) {
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("expandedImage");
+
+  if (modal && modalImg) {
+    modal.style.display = "block";
+    modalImg.src = src;
+    document.body.style.overflow = "hidden";
+
+    modalImg.style.animation = "none";
+    modalImg.offsetHeight;
+    modalImg.style.animation = "growIn 0.7s ease-out";
+  }
+}
+
+function setupModal() {
+  const modal = document.getElementById("imageModal");
+  const closeBtn = document.querySelector(".close");
+
+  if (modal && closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
+    });
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.style.display === "block") {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    });
+  }
 }
 
 function generateMars(photos) {
@@ -178,7 +240,9 @@ function generateMars(photos) {
         .map(
           (photo) => `
         <div class="image-card">
-          <img src="${photo.img_src}" alt="Mars Rover Photo">
+          <img src="${
+            photo.img_src
+          }" alt="Mars Rover Photo" onclick="expandImage(this.src)">
           <div class="image-info">
             <div class="action-buttons">
               <button onclick="downloadPic('${photo.img_src}', 'mars-${
@@ -217,7 +281,7 @@ function genfavouritePics() {
         <div class="favorite-card">
           <img src="${item.url || item.img_src}" alt="${
             item.title || "Mars Rover Photo"
-          }">
+          }" onclick="expandImage(this.src)">
           <div class="favorite-info">
             <p>${
               item.title || `${item.rover?.name} Rover - ${item.earth_date}`

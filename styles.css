@@ -14,6 +14,7 @@ body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  color: #f0f2f5;
 }
 body::before {
   content: "";
@@ -42,8 +43,9 @@ body::before {
 }
 
 .nav-brand {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
   letter-spacing: 2px;
   margin-right: auto;
   color: #451807;
@@ -181,28 +183,37 @@ body::before {
 }
 
 .apod-container {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 50px;
+  display: flex;
+  flex-direction: column;
   background: rgba(0, 0, 0, 0.34);
   backdrop-filter: blur(4px);
   border-radius: 12px;
   padding: 20px;
-}
-
-.apod-content {
-  grid-column: 1;
-  color: rgb(207, 156, 141);
-  text-align: left;
+  gap: 20px;
 }
 
 .apod-media {
-  grid-column: 2;
+  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin-top: 50;
+  align-items: center;
+  order: 1;
+}
+
+.apod-media img,
+.apod-media iframe {
+  width: 100%;
   max-width: 100%;
+  height: auto;
+  max-height: 60vh;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.apod-content {
+  color: rgb(207, 156, 141);
+  text-align: left;
+  order: 2;
 }
 
 .apod-content h2 {
@@ -216,13 +227,28 @@ body::before {
   margin-bottom: 20px;
 }
 
-.apod-container img,
-.apod-container iframe {
-  width: 100%;
-  height: 80%;
-  border-radius: 8px;
-  object-fit: cover;
+@media (min-width: 768px) {
+  .apod-container {
+    flex-direction: row;
+    gap: 50px;
+  }
+
+  .apod-content {
+    flex: 1;
+    order: 1;
+  }
+
+  .apod-media {
+    flex: 1.5;
+    order: 2;
+  }
+
+  .apod-media img,
+  .apod-media iframe {
+    max-height: 500px;
+  }
 }
+
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -267,38 +293,40 @@ body::before {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
 }
-.image-card {
+.image-card,
+.favorite-card {
   position: relative;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s;
 }
-.image-card::before {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  background: linear-gradient(to left, #67534d, #ff9068);
-  border-radius: 10px;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+.image-card::before,
+.favorite-card::before {
+  display: none;
 }
-.image-card:hover::before {
+.image-card:hover::before,
+.favorite-card:hover::before {
   opacity: 1;
 }
-.image-card:hover {
+.image-card:hover,
+.favorite-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
-.image-card img {
-  width: 200%;
+.image-card img,
+.favorite-card img {
+  width: 100%;
   height: 200px;
   object-fit: cover;
+  cursor: pointer;
 }
-.image-info {
-  padding: 15px;
-  font-weight: 500;
-  color: #f0f2f5;
+.image-info,
+.favorite-info {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  flex-direction: column;
 }
 .loading,
 .empty-state {
@@ -323,6 +351,12 @@ body::before {
     transform: rotate(360deg);
   }
 }
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
 .like-btn {
   background: none;
   border: none;
@@ -331,6 +365,9 @@ body::before {
   transition: transform 0.2s ease;
   padding: 8px;
   color: #e15555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .like-btn:hover {
   transform: scale(1.2);
@@ -340,31 +377,6 @@ body::before {
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   padding: 20px;
-}
-.favorite-card {
-  background: rgba(169, 109, 42, 0.373);
-  border-radius: 8px;
-  overflow: hidden;
-  backdrop-filter: blur(8px);
-}
-.favorite-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-.favorite-info {
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.499);
-  backdrop-filter: blur(8px);
-  color: rgb(173, 163, 158);
-}
-.favorite-info p {
-  margin: 0;
-  flex: 1;
-  padding-right: 15px;
 }
 .delete-btn {
   width: 20px;
@@ -447,17 +459,10 @@ body::before {
   fill: rgb(255, 255, 255);
   animation: slide-in-top 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
-.action-buttons {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
 @media screen and (max-width: 768px) {
   .hamburger {
     display: block;
   }
-
   .nav-links {
     display: none;
     width: 25%;
@@ -471,11 +476,9 @@ body::before {
     border-radius: 0 0 12px 12px;
     transition: 0.3s;
   }
-
   .nav-links.show {
     display: flex;
   }
-
   .nav-links li {
     margin: 10px 0;
   }
@@ -485,9 +488,59 @@ body::before {
     transform: translateY(-10px);
     opacity: 0;
   }
-
   100% {
     transform: translateY(0px);
     opacity: 1;
   }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow: auto;
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+  max-height: 90vh;
+  object-fit: contain;
+  animation: growIn 0.7s ease-out;
+}
+
+@keyframes growIn {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #bbb;
+}
+
+.image-card:hover .image-info,
+.favorite-card:hover .favorite-info {
+  background: rgba(169, 109, 42, 0.15);
+  backdrop-filter: blur(8px);
 }
