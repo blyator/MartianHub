@@ -130,15 +130,31 @@ function downloadPic(imageUrl, title) {
 function hamburgerMenu() {
   const hamburger = document.getElementById("hamburger");
   const navLinks = document.getElementById("nav-links");
-  hamburger.addEventListener("click", () => {
+  
+  hamburger.addEventListener("click", (e) => {
+    e.stopPropagation();
     hamburger.classList.toggle("active");
     navLinks.classList.toggle("show");
   });
+
   document.querySelectorAll(".nav-link").forEach((link) => {
     link.addEventListener("click", () => {
       hamburger.classList.remove("active");
       navLinks.classList.remove("show");
     });
+  });
+
+  // Close menu when clicking anywhere else on the page
+  document.addEventListener("click", (e) => {
+    if (navLinks.classList.contains("show")) {
+      hamburger.classList.remove("active");
+      navLinks.classList.remove("show");
+    }
+  });
+
+  // Prevent clicks inside the menu from closing it
+  navLinks.addEventListener("click", (e) => {
+    e.stopPropagation();
   });
 }
 
