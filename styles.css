@@ -3,10 +3,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Space Grotesk", sans-serif;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
 }
 body {
   max-width: 1200px;
@@ -14,7 +10,7 @@ body {
   padding: 20px;
   height: 100vh;
   padding-top: 40px;
-  background-color: #090808;
+  background-color: #0c0706ec;
   background-image: url(assets/nicolas.jpg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -56,7 +52,6 @@ body::before {
   letter-spacing: 2px;
   margin-right: auto;
   color: #451807;
-  cursor: pointer;
 }
 
 .nav-links {
@@ -371,11 +366,9 @@ body::before {
 .like-btn {
   background: none;
   border: none;
-  font-size: 24px;
   cursor: pointer;
   transition: transform 0.2s ease;
   padding: 8px;
-  color: #e15555;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -387,6 +380,17 @@ body::before {
 }
 .like-btn:hover {
   transform: scale(1.2);
+}
+.like-btn .heart-icon {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #e15555;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+.like-btn.liked .heart-icon {
+  fill: #e15555;
 }
 .favorites-grid {
   display: grid;
@@ -500,7 +504,10 @@ body::before {
   }
   .like-btn {
     padding: 12px;
-    font-size: 28px;
+  }
+  .like-btn .heart-icon {
+    width: 28px;
+    height: 28px;
   }
 }
 @keyframes slide-in-top {
