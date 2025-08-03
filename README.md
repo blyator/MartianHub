@@ -1,6 +1,6 @@
 # MartianHub 🌕
 
-Explore real images from Mars and Earth, captured by NASA's rovers and satellites.
+Explore real images from Mars and Earth, captured by NASA's rovers.
 
 ## Overview
 
