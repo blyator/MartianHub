@@ -72,7 +72,7 @@ MartianHub is a web app that fetches and displays images taken by NASA's Mars ro
 ## Acknowledgments
 
 - NASA for providing the APIs
-- Background image from [Unsplash](https://unsplash.com/photos/person-walking-near-brown-rock-kGtFjYdm7DI)
+- Background image from [Unsplash](https://unsplash.com/photos/photography-of-astronaut-standing-beside-rock-formation-during-daytime-NR_tXTuyTak)
 
 ---
 [ Live website](https://martianhub.vercel.app/)
