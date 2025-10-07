@@ -69,12 +69,13 @@ MartianHub is a web app that fetches and displays images taken by NASA's Mars ro
    - Select a rover from the dropdown and click search
    - Save interesting images to favorites or you can download
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - NASA for providing the APIs
-- Background image from [Unsplash]
+- Background image from [Unsplash](https://unsplash.com/photos/person-walking-near-brown-rock-kGtFjYdm7DI)
 
 ---
-Demo live site [https://martianhub.vercel.app/]
+[ Live website](https://martianhub.vercel.app/)
+
 
 Made with ❤️ by billy
